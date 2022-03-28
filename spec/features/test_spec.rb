@@ -1,6 +1,6 @@
 feature 'test' do
   scenario 'checking setup' do
     visit '/'
-    expect(page).to have_content 'Hello world'
+    expect(page).to have_content 'Bookmark Manager'
   end
 end

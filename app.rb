@@ -7,7 +7,16 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/' do
-    'Hello world'
+    'Bookmark Manager'
+  end
+
+  get '/bookmarks' do
+    @bookmarks = [
+      'https://www.google.com', 
+      'https://www.amazon.co.uk',
+    ]
+
+    bookmarks.join("\n")
   end
 
   run! if app_file == $0
