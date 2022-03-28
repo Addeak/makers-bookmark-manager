@@ -7,6 +7,7 @@ gem 'sinatra-contrib'
 gem 'rspec'
 gem 'capybara'
 gem 'launchy'
+gem 'pg'
 
 group :development, :test do
   gem 'rubocop', '1.20'
