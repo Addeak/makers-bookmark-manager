@@ -15,8 +15,7 @@ class BookmarkManager < Sinatra::Base
       'https://www.google.com', 
       'https://www.amazon.co.uk',
     ]
-
-    bookmarks.join("\n")
+    erb :'bookmarks/index'
   end
 
   run! if app_file == $0
