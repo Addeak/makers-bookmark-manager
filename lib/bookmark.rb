@@ -1,4 +1,5 @@
-require 'database_connection'
+require_relative 'database_connection'
+require 'uri'
 
 class Bookmark
   attr_reader :id, :title, :url
@@ -21,6 +22,7 @@ class Bookmark
   end
 
   def self.create(url:, title:)
+    return false unless is_url?(url)
     result = DatabaseConnection.query(
       "INSERT INTO bookmarks (title, url) VALUES($1, $2) RETURNING id, url, title",
       [title, url]
@@ -58,4 +60,17 @@ class Bookmark
       url: result[0]['url']
     )
   end
+
+  def comments
+    DatabaseConnection.query(
+      "SELECT * FROM comments WHERE bookmark_id = $1;", [id]
+    )
+  end
+
+  private
+
+  def self.is_url?(url)
+    url =~ /\A#{URI::regexp(['http', 'https'])}\z/
+  end
+
 end

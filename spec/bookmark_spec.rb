@@ -28,6 +28,12 @@ describe Bookmark do
       expect(bookmark.url).to eq 'http://www.example.org'
       expect(bookmark.title).to eq 'Test bookmark'
     end
+
+    it 'does not create a bookmark if the URL is not valid' do
+      Bookmark.create(url: 'not a real url', title: 'not a real bookmark')
+
+      expect(Bookmark.all).to be_empty
+    end
   end
 
   describe '.delete' do
@@ -62,6 +68,20 @@ describe Bookmark do
       expect(result.id).to eq bookmark.id
       expect(result.title).to eq 'Test bookmark'
       expect(result.url).to eq 'http://www.example.org'
+    end
+  end
+
+  describe '#comments' do
+    it 'returns a list of comments on the bookmark' do
+      bookmark = Bookmark.create(url: 'http://www.example.org', title: 'Test bookmark')
+      DatabaseConnection.query(
+        "INSERT INTO comments (id, text, bookmark_id) VALUES(1, 'Test comment', $1)",
+        [bookmark.id]
+      )
+
+      comment = bookmark.comments.first
+      
+      expect(comment['text']).to eq "Test comment"
     end
   end
 end

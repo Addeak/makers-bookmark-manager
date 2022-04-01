@@ -8,6 +8,7 @@ gem 'rspec'
 gem 'capybara'
 gem 'launchy'
 gem 'pg'
+gem 'sinatra-flash'
 
 group :development, :test do
   gem 'rubocop', '1.20'
