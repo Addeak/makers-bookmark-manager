@@ -1,4 +1,5 @@
 require_relative 'database_connection'
+require_relative './comment'
 require 'uri'
 
 class Bookmark
@@ -61,10 +62,8 @@ class Bookmark
     )
   end
 
-  def comments
-    DatabaseConnection.query(
-      "SELECT * FROM comments WHERE bookmark_id = $1;", [id]
-    )
+  def comments(comment_class = Comment)
+    comment_class.where(bookmark_id: id)
   end
 
   private
